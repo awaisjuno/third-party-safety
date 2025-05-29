@@ -13,12 +13,18 @@ Route::get('/signin', [AuthController::class, 'showSignin'])->name('signin.form'
 Route::post('/signin', [AuthController::class, 'signin'])->name('signin');
 
 Route::get('/contact', [PagesController::class, 'contact']);
+Route::post('/contact-submit', [PagesController::class, 'submitContact'])->name('submit.contact');
+
+Route::get('/services', [PagesController::class, 'services']);
+Route::get('/book-service/{id}', [PageController::class, 'bookService'])->name('book_service');
 
 Route::middleware('auth')->post('/signout', [AuthController::class, 'signout'])->name('signout');
 
 Route::prefix('admin')->group(function () {
 
     Route::get('/financial-management', [AdminController::class, 'financialManagement'])->name('admin.financial.management');
+
+    Route::get('/contact', [AdminController::class, 'contact'])->name('admin.contact.list');
 
     Route::get('/services', [AdminController::class, 'services'])->name('services.index');
     Route::post('/services', [AdminController::class, 'add_services'])->name('services.store');

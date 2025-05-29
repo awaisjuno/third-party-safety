@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\BudgetType;
 use App\Models\Service;
 use App\Models\Training;
+use App\Models\Contact;
 
 class AdminController extends Controller
 {
@@ -42,7 +43,8 @@ class AdminController extends Controller
         //return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
     //}
 
-    public function trainings() {
+    public function trainings() 
+    {
         $trainings = Training::where('is_delete', 0)->get();
         return view('admin.trainings', compact('trainings'));
     }
@@ -57,5 +59,11 @@ class AdminController extends Controller
         return redirect()
             ->route('trainings')
             ->with('success', 'Training added successfully.');
+    }
+
+    public function contact()
+    {
+        $contact = Contact::all();
+        return view('admin.contact', compact('contact'));
     }
 }

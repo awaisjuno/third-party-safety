@@ -3,12 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Third Party Safety Consultancy | Occupational Health & Safety Services</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+    <title>Safety Services | HSE Audits, Fire Safety & Risk Assessment - Third Party Safety Consultancy</title>
 
+    <!-- Meta Description -->
+    <meta name="description" content="Explore our third-party safety services including HSE audits, fire safety inspections, workplace risk assessments, and safety training to ensure compliance and employee well-being.">
+
+    <!-- Meta Keywords -->
+    <meta name="keywords" content="safety services, third party HSE audits, fire safety inspection, workplace risk assessment, safety training programs, occupational health and safety consultants, compliance solutions, industrial safety audits, risk mitigation services, safety certifications">
+
+    <!-- Open Graph Meta Tags (for social sharing) -->
+    <meta property="og:title" content="Expert Safety Services | HSE Audits, Fire Safety, Risk Assessments">
+    <meta property="og:description" content="Comprehensive safety solutions including third-party audits, fire safety inspections, and HSE compliance support for your workplace.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('img/og-image.jpg') }}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('img/favcon.png') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 </head>
 <body>
 

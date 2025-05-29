@@ -50,7 +50,14 @@
                 </div>
 
                 <div class="contact-form-container">
-                    <form class="contact-form" method="POST">
+
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <form action="{{ route('submit.contact') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -64,7 +71,7 @@
                         
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" required>
+                            <input type="tel" id="phone" name="mobile" required>
                         </div>
                         
                         <div class="form-group">

@@ -42,9 +42,9 @@
             <nav id="mainNav">
                 <ul class="space-top">
                     <li><a href="/">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-					<li><a href="#services">Trainings</a></li>
-                    <li><a href="#">About</a></li>
+                    <li><a href="/services">Services</a></li>
+					<li><a href="/trainings">Trainings</a></li>
+                    <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
 					<li><a href="/signin">Sign In</a></li>
                 </ul>
