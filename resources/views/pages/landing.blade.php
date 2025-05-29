@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Safety Services | HSE Audits, Fire Safety & Risk Assessment - Third Party Safety Consultancy</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <!-- Meta Description -->
     <meta name="description" content="Explore our third-party safety services including HSE audits, fire safety inspections, workplace risk assessments, and safety training to ensure compliance and employee well-being.">
 
@@ -35,8 +37,8 @@
         <div class="hero-content">
             <h1>Your Trusted Partner in Occupational Health & Safety</h1>
             <p>Providing comprehensive safety consultancy, training, and inspection services to ensure your workplace meets all regulatory requirements.</p>
-            <a href="#contact" class="btn">Get Started</a>
-            <a href="#services" class="btn btn-outline">Our Services</a>
+            <a href="/signup" class="btn">Get Started</a>
+            <a href="#services" class="white-btn btn-outline">Our Services</a>
         </div>
     </section>
 

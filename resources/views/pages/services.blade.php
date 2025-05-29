@@ -10,56 +10,6 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('img/favcon.png') }}">
 
 </head>
-<style>
-    .services-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-    }
-
-    .service-card {
-        border: 1px solid #eee;
-        border-radius: 8px;
-        overflow: hidden;
-        background: #fff;
-        transition: box-shadow 0.3s ease;
-    }
-
-    .service-card:hover {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .service-img img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .service-content {
-        padding: 20px;
-    }
-
-    .service-content h3 {
-        margin-bottom: 10px;
-        font-size: 20px;
-    }
-
-    .service-content p {
-        font-size: 14px;
-        margin-bottom: 15px;
-    }
-
-    .service-content a {
-        color: #007BFF;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .service-content a i {
-        margin-left: 5px;
-    }
-</style>
-
 <body>
 
     @include ('pages/header')

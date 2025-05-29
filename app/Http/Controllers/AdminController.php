@@ -7,6 +7,8 @@ use App\Models\BudgetType;
 use App\Models\Service;
 use App\Models\Training;
 use App\Models\Contact;
+use App\Models\Task;
+use App\Models\UserDetail;
 
 class AdminController extends Controller
 {
@@ -65,5 +67,37 @@ class AdminController extends Controller
     {
         $contact = Contact::all();
         return view('admin.contact', compact('contact'));
+    }
+
+    public function task_management()
+    {
+        $users = UserDetail::where('is_active', 1)->where('is_delete', 0)->get();
+        $tasks = Task::where('is_delete', 0)->orderBy('task_id', 'desc')->get();
+        return view('admin.task_management', compact('tasks', 'users'));
+    }
+
+    public function store_task(Request $request)
+    {
+        $request->validate([
+            'task_title' => 'required|string|max:255',
+            'assign_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:assign_date',
+            'assign_to' => 'required|integer',
+            'project_id' => 'required|integer',
+            'month' => 'required|string|max:20'
+        ]);
+
+        Task::create([
+            'task_title' => $request->task_title,
+            'task_description' => $request->task_description,
+            'assign_date' => $request->assign_date,
+            'end_date' => $request->end_date,
+            'assign_to' => $request->assign_to,
+            'project_id' => $request->project_id,
+            'month' => $request->month,
+            'is_done' => 0,
+        ]);
+
+        return redirect()->route('admin.task.management')->with('success', 'Task assigned successfully.');
     }
 }

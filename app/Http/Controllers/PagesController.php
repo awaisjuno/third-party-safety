@@ -45,4 +45,14 @@ class PagesController extends Controller
         $services = Service::where('is_delete', 0)->where('is_active', 1)->get();
         return view('pages.services', compact('services'));
     }
+
+    public function blog()
+    {
+        return view('pages.blog');
+    }
+
+    public function VerifyForm()
+    {
+        return view('pages.VerifyForm');
+    }
 }
