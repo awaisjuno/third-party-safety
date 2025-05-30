@@ -6,9 +6,9 @@
                     <h3>About Industry</h3>
                     <p>Third Party Consultancy provides combined services in field of Occupational Health and Safety by Training and Inspection as a Third Party on all types of Lifting Accessories.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="www.facebook.com/p/Third-Party-Safety-Consultancy-100066420978922/"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.linkedin.com/company/third-party-safety-consultancy/"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>

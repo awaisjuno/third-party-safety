@@ -12,8 +12,6 @@ class Training extends Model
         'training_name',
         'training_description',
         'duration',
-        'is_active',
-        'is_delete',
     ];
 
     public $timestamps = false;

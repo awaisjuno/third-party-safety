@@ -60,21 +60,21 @@ class AuthController extends Controller
         $user = User::where('email', $credentials['email'])->first();
 
         if (!$user) {
-            return back()->withErrors('Invalid credentials. Please Try with Correct Details.');
+            return back()->withErrors(['email' => 'Invalid credentials.']);
         }
 
         if ($user->status == 0) {
-            return back()->withErrors('Account Blocked / Waiting for Approval. Please contact the Admin Authority.');
+            return back()->withErrors(['email' => 'Account Blocked or Pending Approval.']);
         }
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            
             return redirect()->intended('/dashboard')->with('success', 'Login successful');
         }
 
-        return back()->withErrors('Invalid credentials. Please Try with Correct Details.');
-}
-
+        return back()->withErrors(['email' => 'Invalid credentials.']);
+    }
 
     public function signout(Request $request)
     {

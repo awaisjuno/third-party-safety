@@ -46,7 +46,15 @@
 					<li><a href="/trainings">Trainings</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>
-					<li><a href="/signin">Sign In</a></li>
+                    @if(auth()->check())
+                        <li class="nav-item">
+                            {{ auth()->user()->detail->first_name ?? '' }} {{ auth()->user()->detail->last_name ?? '' }}
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('signin') }}">Sign In</a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>

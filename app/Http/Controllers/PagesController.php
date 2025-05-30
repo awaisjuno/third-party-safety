@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Contact;
+use App\Models\Training;
 
 class PagesController extends Controller
 {
@@ -40,10 +41,26 @@ class PagesController extends Controller
         return back()->with('success', 'Thank you! Your message has been sent.');
     }
 
+    public function about()
+    {
+        return view('pages.about');
+    }
+
     public function services()
     {
         $services = Service::where('is_delete', 0)->where('is_active', 1)->get();
         return view('pages.services', compact('services'));
+    }
+
+    public function trainings()
+    {
+        $trainings = Training::where('is_delete', 0)->where('is_active', 1)->get();
+        return view('pages.trainings', compact('trainings'));
+    }
+
+    public function enroll_training()
+    {
+        
     }
 
     public function blog()
@@ -55,4 +72,6 @@ class PagesController extends Controller
     {
         return view('pages.VerifyForm');
     }
+
+
 }
