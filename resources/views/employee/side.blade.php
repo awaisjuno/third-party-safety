@@ -6,10 +6,10 @@
 		<nav class="menu">
 			<ul class="sidebar-menu">
 				<li><a href="{{ url('admin/dashboard') }}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
-				<li><a href="{{ url('admin/employee-management') }}"><i class="fa-solid fa-user-tie"></i> Employee Management</a></li>
-				<li><a href="#"><i class="fa-solid fa-list-check"></i> Financial Management</a></li>
-				<li><a href="#"><i class="fa-solid fa-mug-hot"></i> Client Record</a></li>
-				<li><a href="#"><i class="fa-solid fa-bars-progress"></i> Project Management</a></li>
+				<li><a href="{{ url('admin/employee-management') }}"><i class="fa-solid fa-list-check"></i> Task Management</a></li>
+				<li><a href="#"><i class="fa-solid fa-wallet"></i> Salery Record</a></li>
+				<li><a href="#"><i class="fa-solid fa-mug-hot"></i> Work History</a></li>
+				<li><a href="#"><i class="fa-solid fa-gears"></i> Profile Settings</a></li>
 			</ul>
 
 			<ul class="footer-ul">

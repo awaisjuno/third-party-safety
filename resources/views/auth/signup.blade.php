@@ -76,6 +76,16 @@
                             <i class="fas fa-eye"></i>
                         </span>
                     </div>
+
+                    <div class="form-group">
+                        <label for="account_type">Account Type *</label>
+                        <select class="form-control account-type" name="account_type" id="account_type">
+                            <option value="">-- Select Account Type --</option>
+                            <option value="client">Client</option>
+                            <option value="trainee">Trainee</option>
+                            <option value="employee">Employee</option>
+                        </select>
+                    </div>
                     
                     <button type="submit" class="btn auth-btn">Sign Up</button>
                     

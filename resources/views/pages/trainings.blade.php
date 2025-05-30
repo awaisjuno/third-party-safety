@@ -18,6 +18,15 @@
             <div class="section-title">
                 <h2>Our Trainings</h2>
             </div>
+
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+
             <div class="services-grid">
                 @forelse($trainings as $training)
                     <div class="service-card">
@@ -28,7 +37,10 @@
                             <h3>{{ $training->training_name }}</h3>
                             <p>{{ $training->training_description }}</p>
                             <p><strong>Duration:</strong> {{ $training->duration }}</p>
-                            <a href="#">Enroll Now <i class="fas fa-arrow-right"></i></a>
+
+                            <a href="{{ route('training.enroll', $training->training_id) }}" class="enroll-button">
+                                Enroll Now <i class="fas fa-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
                 @empty

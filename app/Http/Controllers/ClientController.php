@@ -22,7 +22,8 @@ class ClientController extends Controller
         return view('client.projects.index', compact('projects'));
     }
 
-    public function addProjectForm() {
+    public function addProjectForm() 
+    {
         $services = Service::where('is_active', 1)->where('is_delete', 0)->get();
         $users = UserDetail::where('is_active', 1)->where('is_delete', 0)->get();
         return view('client.projects.add', compact('services', 'users'));

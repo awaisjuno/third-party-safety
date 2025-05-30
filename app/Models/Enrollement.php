@@ -1,7 +1,11 @@
 <?php
 
+namespace App\Models;
+
 use App\Models\User;
 use App\Models\Training;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Enrollement extends Model
 {
@@ -9,6 +13,7 @@ class Enrollement extends Model
 
     protected $table = 'enrollment';
     protected $primaryKey = 'enrollment_id';
+    public $timestamps = false;
 
     protected $fillable = [
         'user_id', 'training_id', 'enroll_date', 'is_paid'

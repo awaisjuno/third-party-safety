@@ -10,9 +10,16 @@ use App\Models\Contact;
 use App\Models\Task;
 use App\Models\UserDetail;
 use App\Models\Project;
+use App\Models\Enrollement;
 
 class AdminController extends Controller
 {
+
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
+
     public function financialManagement()
     {
         $budgetTypes = BudgetType::all();
@@ -132,5 +139,26 @@ class AdminController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Project added successfully.');
+    }
+
+    public function client() 
+    {
+        return view('admin.client');
+    }
+
+    public function enrollment()
+    {
+        $paid = Enrollement::where('is_paid', 0)->get();
+        $complete = Enrollement::where('is_completed', 0)->where('is_paid', 1)->get();
+        return view('admin.enrollments', compact('paid', 'complete'));
+    }
+
+    public function markAsPaid($id)
+    {
+        $enrollment = Enrollement::findOrFail($id);
+        $enrollment->is_paid = 1;
+        $enrollment->save();
+
+        return back()->with('success', 'Marked as paid successfully.');
     }
 }

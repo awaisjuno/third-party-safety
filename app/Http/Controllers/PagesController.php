@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Contact;
 use App\Models\Training;
+use App\Models\Enrollement;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -58,9 +60,36 @@ class PagesController extends Controller
         return view('pages.trainings', compact('trainings'));
     }
 
-    public function enroll_training()
+    public function enroll_training($training_id)
     {
-        
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You must be logged in to enroll.');
+        }
+
+        $trainingExists = Training::where('training_id', $training_id)->exists();
+
+        if (!$trainingExists) {
+            return redirect()->back()->with('error', 'Invalid training selected.');
+        }
+
+        $userId = Auth::id();
+
+        $alreadyEnrolled = Enrollement::where('user_id', $userId)
+            ->where('training_id', $training_id)
+            ->exists();
+
+        if ($alreadyEnrolled) {
+            return redirect()->back()->with('error', 'You have already enrolled in this training.');
+        }
+
+        Enrollement::create([
+            'user_id' => $userId,
+            'training_id' => $training_id,
+            'enroll_date' => now(),
+            'is_paid' => false,
+        ]);
+
+        return redirect()->back()->with('success', 'Training enrolled successfully!');
     }
 
     public function blog()

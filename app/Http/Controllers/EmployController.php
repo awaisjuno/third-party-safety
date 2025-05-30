@@ -11,6 +11,11 @@ use App\Models\Payment;
 
 class EmployController extends Controller
 {
+
+    public function dashboard()
+    {
+        return view('employee.dashboard');
+    }
     /**
      * Show all projects assigned to the employee.
      */

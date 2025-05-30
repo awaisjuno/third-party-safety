@@ -22,7 +22,9 @@ Route::post('/verify', [PagesController::class, 'verifyCertificate'])->name('cer
 Route::get('/trainings', [PagesController::class, 'trainings'])->name('trainings');
 
 Route::get('/services', [PagesController::class, 'services']);
-Route::get('/book-service/{id}', [PageController::class, 'bookService'])->name('book_service');
+
+//Login User Route
+Route::get('/enroll-training/{training_id}', [PagesController::class, 'enroll_training'])->name('training.enroll');
 
 Route::get('/blog', [PagesController::class, 'blog']);
 Route::get('/about', [PagesController::class, 'about']);
@@ -33,7 +35,9 @@ Route::middleware('auth')->post('/signout', [AuthController::class, 'signout'])-
 Route::prefix('admin')->group(function () {
 
     Route::get('/financial-management', [AdminController::class, 'financialManagement'])->name('admin.financial.management');
+    Route::get('/client-record', [AdminController::class, 'client']);
 
+    Route::get('/dashboard', [AdminController::class, 'dashboard']);
     Route::get('/contact', [AdminController::class, 'contact'])->name('admin.contact.list');
 
     Route::get('/services', [AdminController::class, 'services'])->name('services.index');
@@ -47,6 +51,9 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/projects', [AdminController::class, 'project_management'])->name('admin.projects');
     Route::post('/projects/add', [AdminController::class, 'addProject'])->name('admin.project.add');
+
+    Route::get('/enrollment', [AdminController::class, 'enrollment']);
+    Route::put('/enrollment/mark-paid/{id}', [AdminController::class, 'markAsPaid'])->name('enrollment.markPaid');
 
 });
 
@@ -65,11 +72,9 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->c
     Route::post('/training/book', 'bookTraining')->name('training.book');
 });
 
-Route::prefix('employee')->middleware('auth')->group(function () {
+Route::prefix('employee')->group(function () {
     
-    Route::get('/dashboard', function () {
-        return view('employee.dashboard');
-    })->name('employee.dashboard');
+    Route::get('/dashboard', [EmployController::class, 'dashboard']);
 
     Route::get('/projects', [EmployController::class, 'projects'])->name('employee.projects');
 
