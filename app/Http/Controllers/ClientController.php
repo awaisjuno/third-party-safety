@@ -19,7 +19,8 @@ class ClientController extends Controller
 
     public function projectList() {
         $projects = Project::where('created_by', Auth::id())->get();
-        return view('client.projects.index', compact('projects'));
+        $services = Service::where('is_active', 1)->where('is_delete', 0)->get();
+        return view('client.project', compact('projects', 'services'));
     }
 
     public function addProjectForm() 
@@ -30,6 +31,7 @@ class ClientController extends Controller
     }
 
     public function storeProject(Request $request) {
+
         $request->validate([
             'project_title' => 'required|string|max:255',
             'project_description' => 'nullable|string',

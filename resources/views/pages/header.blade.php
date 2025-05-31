@@ -48,7 +48,7 @@
                     <li><a href="/contact">Contact</a></li>
                     @if(auth()->check())
                         <li class="nav-item">
-                            {{ auth()->user()->detail->first_name ?? '' }} {{ auth()->user()->detail->last_name ?? '' }}
+                            <a class="nav-link" href="#"><i class="fa-regular fa-user"></i> Account</a>
                         </li>
                     @else
                         <li class="nav-item">

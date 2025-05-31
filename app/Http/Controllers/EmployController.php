@@ -8,6 +8,9 @@ use App\Models\Task;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\Payment;
+use App\Models\Finance;
+use App\Models\Service;
+use App\Models\BudgetType;
 
 class EmployController extends Controller
 {
@@ -95,10 +98,34 @@ class EmployController extends Controller
      */
     public function finance()
     {
-        $payments = Payment::where('user_id', auth()->id())
-                           ->orderBy('created_at', 'desc')
-                           ->get();
-
-        return view('employee.finance', compact('payments'));
+        $finance = Finance::where('create_by', auth()->id())->get();
+        //$services = Service::where('is_active', 1)->get();
+        $type = BudgetType::where('is_active', 1)->get();;
+        return view('employee.finance', compact('finance', 'type'));
     }
+
+    public function storeFinance(Request $request)
+    {
+        $request->validate([
+            'finance_title' => 'required|string|max:255',
+            'finance_description' => 'nullable|string',
+            'create_date' => 'required|date',
+            'type_id' => 'required|integer|exists:services,id',
+        ]);
+
+        Finance::create([
+            'finance_title' => $request->finance_title,
+            'finance_description' => $request->finance_description,
+            'create_date' => $request->create_date,
+            'create_by' => auth()->id(),
+            'type_id' => $request->type_id,
+            'is_approved' => 0,
+            'is_active' => 1,
+            'is_delete' => 0,
+        ]);
+
+        return redirect()->back()->with('success', 'Finance entry added successfully.');
+    }
+
+
 }

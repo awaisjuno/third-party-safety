@@ -21,4 +21,9 @@ class Project extends Model
     ];
 
     public $timestamps = false;
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'user_id');
+    }
 }

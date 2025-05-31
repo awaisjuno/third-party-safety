@@ -31,7 +31,7 @@
                 @forelse($trainings as $training)
                     <div class="service-card">
                         <div class="service-img">
-                            <img src="{{ asset('uploads/trainings/' . ($training->image ?? 'default.png')) }}" alt="{{ $training->training_name }}">
+                            <img src="{{ asset('storage/' . ($training->img)) }}" alt="{{ $training->training_name }}">
                         </div>
                         <div class="service-content">
                             <h3>{{ $training->training_name }}</h3>

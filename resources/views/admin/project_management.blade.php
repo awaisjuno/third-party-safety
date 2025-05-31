@@ -96,7 +96,51 @@
 
         </div>
 
-        <hr>
+        <!-- Wait for Approval Section -->
+        <div class="panel-default">
+            <div class="panel-heading">
+                <h2>Projects Waiting for Approval</h2>
+            </div>
+
+            <div class="panel-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th>Service ID</th>
+                            <th>Starting Date</th>
+                            <th>Delivery Date</th>
+                            <th>Assign To</th>
+                            <th>Done</th>
+                            <th>Active</th>
+                            <th>Approved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($approvel as $project)
+                            <tr>
+                                <td>{{ $project->project_id }}</td>
+                                <td>{{ $project->project_title }}</td>
+                                <td>{{ $project->project_description }}</td>
+                                <td>{{ $project->project_type }}</td>
+                                <td>{{ $project->service_id }}</td>
+                                <td>{{ $project->starting_date }}</td>
+                                <td>{{ $project->delivery_date }}</td>
+                                <td>{{ $project->assign_to }}</td>
+                                <td>{{ $project->is_done ? 'Yes' : 'No' }}</td>
+                                <td>{{ $project->is_active ? 'Yes' : 'No' }}</td>
+                                <td>{{ $project->is_approved ? 'Yes' : 'No' }}</td>
+                            </tr>
+                        @empty
+                            <tr><td colspan="11">No projects waiting for approval.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <!-- Project Listing -->
         <div class="panel-default">

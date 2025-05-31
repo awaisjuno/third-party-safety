@@ -30,7 +30,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('add_training') }}">
+                <form method="POST" action="{{ route('add_training') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -49,9 +49,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="training_img">Training Image *</label>
+                        <input type="file" id="training_img" name="training_img" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
                         <button type="submit" class="btn btn-primary">Add Training</button>
                     </div>
                 </form>
+
             </div>
         </div>
 
@@ -83,9 +89,13 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="#">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+                                    <form action="{{ route('trainings.delete', $training->training_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this training?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" style="border: none; background: none;">
+                                            <i class="fa fa-trash text-danger"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

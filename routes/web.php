@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\EmployController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
 
 Route::get('/', [PagesController::class, 'landing']);
 Route::get('/signup', [AuthController::class, 'showSignup'])->name('signup.form');
@@ -46,6 +47,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/trainings', [AdminController::class, 'trainings'])->name('trainings');
     Route::post('/trainings/add', [AdminController::class, 'add_training'])->name('add_training');
+    Route::delete('/trainings/{id}', [AdminController::class, 'delete_training'])->name('trainings.delete');
 
     Route::get('/task-management', [AdminController::class, 'task_management'])->name('admin.task.management');
     Route::post('/task-store', [AdminController::class, 'store_task'])->name('admin.task.store');
@@ -61,13 +63,13 @@ Route::prefix('admin')->group(function () {
 
 });
 
-Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->controller(ClientController::class)->group(function () {
+Route::prefix('client')->name('client.')->controller(ClientController::class)->group(function () {
     
     Route::get('/dashboard', 'dashboard')->name('dashboard');
 
     Route::get('/projects', 'projectList')->name('projects');
-    Route::get('/projects/add', 'addProjectForm')->name('project.add.form');
-    Route::post('/projects/add', 'storeProject')->name('project.add');
+    Route::get('/projects/add', 'addProjectForm')->name('projects.add.form');
+    Route::post('/projects/store','storeProject')->name('projects.store');
 
     Route::get('/message/{project_id}', 'messageForm')->name('message.form');
     Route::post('/message/send', 'sendMessage')->name('message.send');
@@ -88,4 +90,6 @@ Route::prefix('employee')->group(function () {
     Route::post('/send-message', [EmployController::class, 'sendMessage'])->name('employee.send.message');
 
     Route::get('/finance', [EmployController::class, 'finance'])->name('employee.finance');
+    Route::post('/finance/store', [EmployController::class, 'storeFinance'])->name('employee.finance.store');
+
 });

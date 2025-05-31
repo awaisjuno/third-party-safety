@@ -70,17 +70,46 @@ class AdminController extends Controller
         return view('admin.trainings', compact('trainings'));
     }
 
-    public function add_training(Request $request) {
+    public function add_training(Request $request)
+    {
+        $request->validate([
+            'training_name' => 'required|max:255',
+            'training_description' => 'nullable|string',
+            'duration' => 'required|string',
+            'training_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $imagePath = null;
+
+        if ($request->hasFile('training_img')) {
+            $imagePath = $request->file('training_img')->store('trainings', 'public');
+        }
+
         Training::create([
             'training_name' => $request->training_name,
             'training_description' => $request->training_description,
             'duration' => $request->duration,
+            'img' => $imagePath
         ]);
 
         return redirect()
             ->route('trainings')
             ->with('success', 'Training added successfully.');
     }
+
+    public function delete_training($training_id)
+    {
+        $training = Training::findOrFail($training_id);
+
+        if ($training->image && \Storage::disk('public')->exists($training->image)) {
+            \Storage::disk('public')->delete($training->image);
+        }
+
+        $training->delete();
+
+        return redirect()->route('trainings')->with('success', 'Training deleted successfully.');
+    }
+
 
     public function contact()
     {
@@ -123,9 +152,10 @@ class AdminController extends Controller
     public function project_management()
     {
         $projects = Project::where('is_delete', 0)->get();
+        $approvel = Project::where('is_approved', 0)->get();
         $users = UserDetail::where('is_active', 1)->where('is_delete', 0)->get();
         $services = Service::where('is_active', 1)->where('is_delete', 0)->get();
-        return view('admin.project_management', compact('projects', 'users', 'services'));
+        return view('admin.project_management', compact('projects', 'approvel', 'users', 'services'));
     }
 
     public function add_project(Request $request)
