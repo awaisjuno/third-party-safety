@@ -73,6 +73,7 @@
                             <th>Training ID</th>
                             <th>Enroll Date</th>
                             <th>Completion Status</th>
+                            <th>Action</th> {{-- New column --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -82,14 +83,20 @@
                                 <td>{{ $c->training_id }}</td>
                                 <td>{{ \Carbon\Carbon::parse($c->enroll_date)->format('d M Y, h:i A') }}</td>
                                 <td>Not Completed</td>
+                                <td>
+                                    <a href="{{ route('admin.complete.form', ['enroll_id' => $c->enrollment_id]) }}" class="btn btn-primary btn-sm">
+                                        Mark as Completed
+                                    </a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" style="text-align:center;">No incomplete enrollments found.</td>
+                                <td colspan="5" style="text-align:center;">No incomplete enrollments found.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+
             </div>
         </div>
 

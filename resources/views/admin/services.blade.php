@@ -30,7 +30,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('add_training') }}">
+                <form method="POST" action="{{ route('services.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
@@ -41,6 +41,11 @@
                     <div class="form-group">
                         <label for="service_description">Service Description</label>
                         <textarea id="service_description" name="service_description" class="form-control" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service_img">Service Image</label>
+                        <input type="file" id="service_img" name="service_img" required class="form-control">
                     </div>
 
                     <div class="form-group">
@@ -76,9 +81,13 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="#">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+                                    <form action="{{ route('services.delete', $service->service_id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this service?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" style="border: none; background: none; color: red;">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

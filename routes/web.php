@@ -42,6 +42,7 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/services', [AdminController::class, 'services'])->name('services.index');
     Route::post('/services', [AdminController::class, 'add_services'])->name('services.store');
+    Route::delete('/services/{id}', [AdminController::class, 'delete_service'])->name('services.delete');
 
     Route::get('/trainings', [AdminController::class, 'trainings'])->name('trainings');
     Route::post('/trainings/add', [AdminController::class, 'add_training'])->name('add_training');
@@ -54,6 +55,9 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/enrollment', [AdminController::class, 'enrollment']);
     Route::put('/enrollment/mark-paid/{id}', [AdminController::class, 'markAsPaid'])->name('enrollment.markPaid');
+
+    Route::get('/enrollment/{enroll_id}/complete', [AdminController::class, 'showCompletionForm'])->name('admin.complete.form');
+    Route::get('/enrollment/{enroll_id}/complete', [AdminController::class, 'training_completion_form'])->name('admin.complete.form');
 
 });
 

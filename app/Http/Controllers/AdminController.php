@@ -36,22 +36,33 @@ class AdminController extends Controller
     {
         $request->validate([
             'service_name' => 'required|max:100',
-            'service_description' => 'nullable'
+            'service_description' => 'nullable',
+            'service_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        $imagePath = null;
+
+        if ($request->hasFile('service_img')) {
+            $image = $request->file('service_img');
+            $imagePath = $image->store('services', 'public');
+        }
 
         Service::create([
             'service_name' => $request->service_name,
             'service_description' => $request->service_description,
+            'img' => $imagePath,
         ]);
 
         return redirect()->route('services.index')->with('success', 'Service added successfully.');
     }
 
-    //public function delete($id)
-    //{
-        //Service::where('service_id', $id)->update(['is_delete' => 1]);
-        //return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
-    //}
+    public function delete_service($id)
+    {
+        $service = Service::findOrFail($id);
+        $service->delete();
+
+        return redirect()->route('services.index')->with('success', 'Service deleted successfully.');
+    }
 
     public function trainings() 
     {
@@ -160,5 +171,12 @@ class AdminController extends Controller
         $enrollment->save();
 
         return back()->with('success', 'Marked as paid successfully.');
+    }
+
+    public function training_completion_form($enroll_id)
+    {
+        $enrollment = Enrollement::findOrFail($enroll_id);
+        print_r($enrollment);
+        //return view('admin.training_completion_form', compact('enrollment'));
     }
 }

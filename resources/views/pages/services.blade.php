@@ -24,7 +24,7 @@
                 @forelse($services as $service)
                     <div class="service-card">
                         <div class="service-img">
-                            <img src="{{ asset('uploads/services/' . $service->image) }}" alt="{{ $service->service_name }}">
+                            <img src="{{ asset('storage/' . $service->img) }}" alt="{{ $service->service_name }}">
                         </div>
                         <div class="service-content">
                             <h3>{{ $service->service_name }}</h3>

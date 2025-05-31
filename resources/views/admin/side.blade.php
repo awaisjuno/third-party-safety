@@ -10,6 +10,7 @@
 				<li><a href="#"><i class="fa-solid fa-list-check"></i> Financial Management</a></li>
 				<li><a href="#"><i class="fa-solid fa-mug-hot"></i> Client Record</a></li>
 				<li><a href="#"><i class="fa-solid fa-bars-progress"></i> Project Management</a></li>
+				<li><a href="/admin/enrollment"><i class="fa-solid fa-file-export"></i> Enrollment</a></li>
 			</ul>
 
 			<ul class="footer-ul">
