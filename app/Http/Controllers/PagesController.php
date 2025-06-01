@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Contact;
 use App\Models\Training;
+use App\Models\Certificate;
 use App\Models\Enrollement;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,9 +98,27 @@ class PagesController extends Controller
         return view('pages.blog');
     }
 
+
     public function VerifyForm()
     {
         return view('pages.VerifyForm');
+    }
+
+    public function VerifyCertificate(Request $request)
+    {
+        $request->validate([
+            'key' => 'required|string',
+        ]);
+
+        $certificate = Certificate::with(['enrollment.userDetail'])
+            ->where('unique_id', $request->key)
+            ->first();
+
+        if ($certificate) {
+            return view('pages.certificate_result', compact('certificate'));
+        }
+
+        return back()->withErrors(['Invalid certificate key. Please try again.'])->withInput();
     }
 
 

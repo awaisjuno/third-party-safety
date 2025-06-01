@@ -120,8 +120,6 @@ class EmployController extends Controller
             'create_by' => auth()->id(),
             'type_id' => $request->type_id,
             'is_approved' => 0,
-            'is_active' => 1,
-            'is_delete' => 0,
         ]);
 
         return redirect()->back()->with('success', 'Finance entry added successfully.');

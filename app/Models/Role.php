@@ -11,18 +11,16 @@ class Role extends Model
 
     protected $fillable = [
         'role_name',
-        'status',
-        'is_active',
-        'is_delete',
+        'status'
     ];
 
-    public function users()
-    {
-        return $this->belongsToMany(
-            User::class,
-            'user_role',
-            'role_id',
-            'user_id'
-        );
-    }
+    //public function users()
+    //{
+        //return $this->belongsToMany(
+            //User::class,
+            //'user_role',
+            //'role_id',
+            //'user_id'
+        //);
+    //}
 }

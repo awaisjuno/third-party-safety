@@ -490,3 +490,16 @@ textarea.form-control {
         padding: 15px;
     }
 }
+
+.btn-approve {
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-approve:hover {
+    background-color: #218838;
+}

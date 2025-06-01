@@ -18,7 +18,7 @@ Route::get('/contact', [PagesController::class, 'contact']);
 Route::post('/contact-submit', [PagesController::class, 'submitContact'])->name('submit.contact');
 
 Route::get('/verify', [PagesController::class, 'VerifyForm']);
-Route::post('/verify', [PagesController::class, 'verifyCertificate'])->name('certificate.verify');
+Route::post('/verify', [PagesController::class, 'VerifyCertificate'])->name('certificate.verify');
 
 Route::get('/trainings', [PagesController::class, 'trainings'])->name('trainings');
 
@@ -60,6 +60,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/enrollment/{enroll_id}/complete', [AdminController::class, 'showCompletionForm'])->name('admin.complete.form');
     Route::get('/enrollment/{enroll_id}/complete', [AdminController::class, 'training_completion_form'])->name('admin.complete.form');
+    Route::post('/certificate/store', [AdminController::class, 'store'])->name('certificate.store');
+    Route::post('/certificate/store', [AdminController::class, 'training_completion_form_store'])->name('certificate.store');
 
 });
 

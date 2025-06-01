@@ -80,10 +80,20 @@
                     <div class="form-group">
                         <label for="account_type">Account Type *</label>
                         <select class="form-control account-type" name="account_type" id="account_type">
-                            <option value="">-- Select Account Type --</option>
-                            <option value="client">Client</option>
-                            <option value="trainee">Trainee</option>
-                            <option value="employee">Employee</option>
+                            <option readonly>-- Select Account Type --</option>
+                            <?php 
+                            
+                                if($role == TRUE) {
+
+                                    foreach($role as $row) {
+
+                                        echo "<option value='". $row['role_id'] ."'>". $row['role_name'] ."</option>";
+
+                                    }
+
+                                }
+                            
+                            ?>
                         </select>
                     </div>
                     

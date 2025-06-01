@@ -28,4 +28,9 @@ class Enrollement extends Model
     {
         return $this->belongsTo(Training::class);
     }
+
+    public function userDetail()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id', 'user_id');
+    }
 }

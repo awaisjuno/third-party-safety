@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Models\Role;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +15,8 @@ class AuthController extends Controller
 {
     public function showSignup()
     {
-        return view('auth.signup');
+        $role = Role::where('is_active', 1)->get();
+        return view('auth.signup', compact('role'));
     }
 
     public function signup(Request $request)
@@ -24,13 +27,14 @@ class AuthController extends Controller
             'last_name' => 'required|string|max:255',
             'mobile' => 'required|string|max:20',
             'password' => 'required|min:6|confirmed',
+            'account_type' => 'required|exists:role,role_id',
         ]);
 
-        DB::transaction(function () use ($request) {
+        $user = DB::transaction(function () use ($request) {
 
             $user = User::create([
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
+                'password' => \Hash::make($request->password),
                 'status' => 0,
             ]);
 
@@ -38,12 +42,20 @@ class AuthController extends Controller
                 'user_id' => $user->user_id,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
-                'mobile' => $request->mobile
+                'mobile' => $request->mobile,
             ]);
+
+            return $user;
         });
+
+       UserRole::create([
+            'user_id' => $user->user_id,
+            'role_id' => $request->account_type,
+        ]);
 
         return redirect()->route('signin.form')->with('success', 'Account created! Please login.');
     }
+
 
     public function showSignin()
     {

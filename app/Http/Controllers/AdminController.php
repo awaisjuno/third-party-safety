@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\BudgetType;
 use App\Models\Service;
@@ -11,6 +12,8 @@ use App\Models\Task;
 use App\Models\UserDetail;
 use App\Models\Project;
 use App\Models\Enrollement;
+use App\Models\User;
+use App\Models\Certificate;
 
 class AdminController extends Controller
 {
@@ -184,7 +187,39 @@ class AdminController extends Controller
 
     public function client() 
     {
-        return view('admin.client');
+      $clients = User::join('user_role', 'user.user_id', '=', 'user_role.user_id')
+                ->where('user_role.role_id', 3)
+                ->where('user_role.is_delete', 0)
+                ->where('user_role.is_active', 1)
+                ->select('user.*')
+                ->get();
+        return view('admin.client', compact('clients'));
+    }
+
+    public function employee()
+    {
+        $pending = User::join('user_role', 'user.user_id', '=', 'user_role.user_id')
+            ->where('user_role.role_id', 3)
+            ->where('user.status', 0)
+            ->where('user_role.is_delete', 0)
+            ->select('user.*')
+            ->get();
+
+        $active = User::join('user_role', 'user.user_id', '=', 'user_role.user_id')
+            ->where('user_role.role_id', 3)
+            ->where('user.status', 1)
+            ->where('user_role.is_delete', 0)
+            ->select('user.*')
+            ->get();
+
+        return view('admin.employee', compact('pending', 'active'));
+    }
+
+    public function approveEmployee($id)
+    {
+        User::where('user_id', $id)->update(['status' => 1]);
+
+        return redirect()->back()->with('success', 'Employee approved successfully.');
     }
 
     public function enrollment()
@@ -205,8 +240,32 @@ class AdminController extends Controller
 
     public function training_completion_form($enroll_id)
     {
-        $enrollment = Enrollement::findOrFail($enroll_id);
-        print_r($enrollment);
-        //return view('admin.training_completion_form', compact('enrollment'));
+        $enrollment = DB::table('enrollment')
+            ->join('user_detail', 'enrollment.user_id', '=', 'user_detail.user_id')
+            ->where('enrollment.enrollment_id', $enroll_id)
+            ->select('enrollment.*', 'user_detail.first_name', 'user_detail.last_name')
+            ->first();
+
+        return view('admin.training_completion_form', compact('enrollment'));
     }
+
+    public function training_completion_form_store(Request $request)
+    {
+        $request->validate([
+            'enrollment_id' => 'required|exists:enrollment,enrollment_id',
+            'pass_date' => 'required|date',
+            'total_marks' => 'required|integer|min:0',
+        ]);
+
+        Certificate::create([
+            'enrollment_id' => $request->enrollment_id,
+            'create_date' => date('Y-m-d'),
+            'pass_date' => $request->pass_date,
+            'total_marks' => $request->total_marks,
+            'unique_id' => uniqid('CERT-')
+        ]);
+
+        return redirect()->back()->with('success', 'Certificate added successfully!');
+    }
+
 }
