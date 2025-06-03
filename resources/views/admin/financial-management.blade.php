@@ -28,7 +28,8 @@
 
             <div class="panel-body">
 
-                <form method="POST">
+                <form method="POST" action="{{ route('admin.finance.store') }}">
+                    @csrf
 
                     <!-- Finance Title -->
                     <div class="form-group">
@@ -42,34 +43,52 @@
                         <textarea id="finance_description" name="finance_description" class="form-control" rows="4"></textarea>
                     </div>
 
-                    <!-- Type -->
+                    <!-- Create Date -->
                     <div class="form-group">
-                        <label for="finance_type">Type *</label>
-                        <select id="finance_type" name="finance_type" class="form-control" required>
+                        <label for="create_date">Create Date *</label>
+                        <input type="date" id="create_date" name="create_date" class="form-control" required>
+                    </div>
+
+                    <!-- Month -->
+                    <div class="form-group">
+                        <label for="month_id">Month *</label>
+                        <select id="month_id" name="month_id" class="form-control" required>
+                            <option value="">-- Select Month --</option>
+                            @foreach($months as $month)
+                                <option value="{{ $month->month_id }}">{{ $month->month_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Year -->
+                    <div class="form-group">
+                        <label for="year">Year *</label>
+                        <input type="number" id="year" name="year" class="form-control" value="{{ date('Y') }}" required>
+                    </div>
+
+                    <!-- Type (type_id) -->
+                    <div class="form-group">
+                        <label for="type_id">Type *</label>
+                        <select id="type_id" name="type_id" class="form-control" required>
                             <option value="">-- Select Type --</option>
-                            <option value="Rent">Rent</option>
-                            <option value="Utilities">Utilities</option>
-                            <option value="Insurance">Insurance</option>
-                            <option value="Stationary & Printing">Stationary & Printing</option>
-                            <option value="Food Expense">Food Expense</option>
-                            <option value="Marketting">Marketting</option>
-                            <option value="Fuel Expense">Fuel Expense</option>
-                            <option value="Miscellaneous">Miscellaneous</option>
+                            @foreach($budgetTypes as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <!-- Created By -->
                     <div class="form-group">
-                        <label for="created_by">Created By *</label>
-                        <input type="text" id="created_by" name="created_by" class="form-control" required>
+                        <label for="create_by">Created By *</label>
+                        <input type="text" id="create_by" name="create_by" class="form-control" required>
                     </div>
 
-                    <!-- Submit Button -->
+                    <!-- Submit -->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-
                 </form>
+
 
             </div>
 

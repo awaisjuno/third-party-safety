@@ -18,6 +18,8 @@ class Project extends Model
         'delivery_date',
         'assign_to',
         'is_done',
+        'month_id',
+        'year'
     ];
 
     public $timestamps = false;

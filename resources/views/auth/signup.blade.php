@@ -79,21 +79,13 @@
 
                     <div class="form-group">
                         <label for="account_type">Account Type *</label>
-                        <select class="form-control account-type" name="account_type" id="account_type">
-                            <option readonly>-- Select Account Type --</option>
-                            <?php 
-                            
-                                if($role == TRUE) {
-
-                                    foreach($role as $row) {
-
-                                        echo "<option value='". $row['role_id'] ."'>". $row['role_name'] ."</option>";
-
-                                    }
-
-                                }
-                            
-                            ?>
+                        <select class="form-control account-type" name="account_type" id="account_type" required>
+                            <option disabled selected>-- Select Account Type --</option>
+                            @if(!empty($role))
+                                @foreach($role as $row)
+                                    <option value="{{ $row['role_id'] }}">{{ $row['role_name'] }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     

@@ -14,6 +14,7 @@ use App\Models\Project;
 use App\Models\Enrollement;
 use App\Models\User;
 use App\Models\Certificate;
+use App\Models\Month;
 
 class AdminController extends Controller
 {
@@ -26,7 +27,33 @@ class AdminController extends Controller
     public function financialManagement()
     {
         $budgetTypes = BudgetType::all();
-        return view('admin.financial-management', compact('budgetTypes'));
+        $months = Month::get();
+        return view('admin.financial-management', compact('budgetTypes', 'months'));
+    }
+
+    public function storeFinancialRecord(Request $request)
+    {
+        $request->validate([
+            'finance_title' => 'required|string|max:255',
+            'finance_description' => 'nullable|string',
+            'create_date' => 'required|date',
+            'month_id' => 'required|integer|exists:month,month_id',
+            'year' => 'required|digits:4',
+            'type_id' => 'required|integer|exists:budget_types,id',
+            'create_by' => 'required|integer',
+        ]);
+
+        Finance::create([
+            'finance_title' => $request->finance_title,
+            'finance_description' => $request->finance_description,
+            'create_date' => $request->create_date,
+            'month_id' => $request->month_id,
+            'year' => $request->year,
+            'type_id' => $request->type_id,
+            'create_by' => $request->create_by,
+        ]);
+
+        return redirect()->back()->with('success', 'Financial record added successfully.');
     }
 
     public function services()
@@ -158,10 +185,11 @@ class AdminController extends Controller
         $approvel = Project::where('is_approved', 0)->get();
         $users = UserDetail::where('is_active', 1)->where('is_delete', 0)->get();
         $services = Service::where('is_active', 1)->where('is_delete', 0)->get();
-        return view('admin.project_management', compact('projects', 'approvel', 'users', 'services'));
+        $months = Month::get();
+        return view('admin.project_management', compact('projects', 'approvel', 'users', 'services', 'months'));
     }
 
-    public function add_project(Request $request)
+    public function addProject(Request $request)
     {
         $request->validate([
             'project_title' => 'required|string|max:255',
@@ -180,6 +208,8 @@ class AdminController extends Controller
             'starting_date' => $request->starting_date,
             'delivery_date' => $request->delivery_date,
             'assign_to' => $request->assign_to,
+            'month_id' => $request->month_id,
+            'year' => date('Y'),
         ]);
 
         return redirect()->back()->with('success', 'Project added successfully.');

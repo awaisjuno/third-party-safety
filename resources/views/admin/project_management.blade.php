@@ -61,6 +61,17 @@
                         </select>
                     </div>
 
+                    <!-- Select Month -->
+                    <div class="form-group">
+                        <label for="month_id">Select Month</label>
+                        <select id="month_id" name="month_id" class="form-control" required>
+                            <option value="">-- Select Month --</option>
+                            @foreach($months as $month)
+                                <option value="{{ $month->month_id }}">{{ $month->month_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <!-- Starting Date -->
                     <div class="form-group">
                         <label for="starting_date">Starting Date</label>

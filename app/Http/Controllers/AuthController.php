@@ -48,7 +48,7 @@ class AuthController extends Controller
             return $user;
         });
 
-       UserRole::create([
+        UserRole::create([
             'user_id' => $user->user_id,
             'role_id' => $request->account_type,
         ]);
@@ -81,8 +81,29 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            
-            return redirect()->intended('/dashboard')->with('success', 'Login successful');
+
+            $userId = Auth::id();
+
+            $roles = DB::table('user_role')
+                ->join('role', 'user_role.role_id', '=', 'role.role_id')
+                ->where('user_role.user_id', $userId)
+                ->where('user_role.is_active', 1)
+                ->where('user_role.is_delete', 0)
+                ->where('role.is_active', 1)
+                ->where('role.is_delete', 0)
+                ->pluck('role.role_name')
+                ->map(fn($r) => strtolower($r))
+                ->toArray();
+
+            if (in_array('admin', $roles)) {
+                return redirect()->route('admin.dashboard')->with('success', 'Login successful');
+            } elseif (in_array('client', $roles)) {
+                return redirect()->route('client.dashboard')->with('success', 'Login successful');
+            } elseif (in_array('employee', $roles)) {
+                return redirect()->route('employee.dashboard')->with('success', 'Login successful');
+            } else {
+                return redirect('/')->with('success', 'Login successful');
+            }
         }
 
         return back()->withErrors(['email' => 'Invalid credentials.']);
@@ -95,6 +116,6 @@ class AuthController extends Controller
         $request->session()->flush();
         $request->session()->regenerateToken();
 
-        return redirect()->route('signin.form')->with('success', 'Logged out successfully');
+        return redirect()->route('login')->with('success', 'Logged out successfully');
     }
 }

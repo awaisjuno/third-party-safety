@@ -7,8 +7,10 @@ use App\Models\Service;
 use App\Models\Contact;
 use App\Models\Training;
 use App\Models\Certificate;
+use App\Models\UserDetail;
 use App\Models\Enrollement;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PagesController extends Controller
 {
@@ -121,5 +123,28 @@ class PagesController extends Controller
         return back()->withErrors(['Invalid certificate key. Please try again.'])->withInput();
     }
 
+    public function enrollment_status()
+    {
+        $userId = Auth::id();
+        $enrollments = Enrollement::where('user_id', $userId)
+            ->with(['training', 'certificate'])
+            ->get();
+
+        return view('pages.status_certification', compact('enrollments'));
+    }
+
+    public function downloadCertificate($id)
+    {
+        $certificate = Certificate::where('certificate_id', $id)->first();
+        $user = UserDetail::where('user_id', Auth::id())->first();
+        $pdf = PDF::loadView('pages.certificate_pdf', compact('certificate'));
+        $pdf->setPaper('A4', 'portrait')
+            ->setOption('margin-top', 0)
+            ->setOption('margin-right', 0)
+            ->setOption('margin-bottom', 0)
+            ->setOption('margin-left', 0)
+            ->setOption('footer-spacing', 0);
+        return $pdf->download('Certificate_' . $certificate->user->name . '.pdf');
+    }
 
 }
